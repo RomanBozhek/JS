@@ -1,0 +1,9 @@
+body {
+    background: silver;
+}
+h1 {
+    color: darkblue;
+}
+a:visited {
+    color: blue;
+}
