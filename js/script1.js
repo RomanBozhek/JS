@@ -1,0 +1,1 @@
+document.body.innerHTML = '<h1>Hello JavaScript!</h1><br><a href="resume.html">RESUME</a>'
