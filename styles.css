@@ -1,9 +1,151 @@
-body {
-    background: silver;
+a:visited, a {
+    color: black;
+    text-decoration: none;
 }
-h1 {
+
+a:hover {
     color: darkblue;
+    font-weight: bolder;
 }
-a:visited {
-    color: blue;
+
+a:active {
+    color: grey;
+}
+
+.info .avatar {
+    border: 2px solid darkblue;
+    width: 150px;
+    border-radius: 50%;
+    box-shadow: 4px 8px 16px darkslategrey;
+    margin-right: 25px;
+}
+
+.info h2 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.container {
+    max-width: 550px;
+    margin: auto;
+    padding-top: 25px;
+}
+
+.info{
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.card {
+    border-radius: 20px;
+    padding: 5px 0 5px 15px;
+    margin-bottom: 10px;
+}
+
+.card h4 {
+    margin: 5px 0px;
+}
+
+.card ol {
+    margin-top: 0px;
+    padding-top: 0px;
+}
+
+.bg-yellow {
+    background-color: lightgoldenrodyellow;
+}
+
+.bg-green {
+    background-color: rgb(196, 242, 196);
+}
+
+.bg-rose {
+    background-color: rgb(242, 193, 174);
+}
+
+.bg-blue {
+    background-color: lightblue;
+}
+
+.bg-orange {
+    background-color: rgb(234, 212, 170);
+}
+
+.interests {
+    display: flex;
+}
+
+.hobby, .languages {
+    width: 50%;
+}
+
+.hobby {
+    margin-right: 15px;
+}
+
+.hobby img {
+    width: 0.75em;
+    margin-right: 15px;
+}
+
+.work table,
+.education table {
+    margin-left: 35px;
+}
+
+.work td,
+.education, td {
+    padding-right: 35px;
+    vertical-align: top;
+}
+
+.contact-info {
+    display: flex;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+.contact-group {
+    width: 50%;
+    margin-right: 25px;
+    box-sizing: border-box;
+}
+
+.contact-msg {
+    width: 100%;
+    padding-right: 25px;
+    box-sizing: border-box;
+}
+
+.contact label {
+    display: block;
+    color: grey;
+}
+
+.contact input,
+.contact textarea {
+    width: 100%;
+    border: none;
+    border-bottom: 1px black solid;
+    background: transparent;
+    outline: none;
+    color: black;
+}
+
+.contact-msg input:last-child {
+    display: block;
+    margin: auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    width: 200px;
+    height: 2em;
+    border-radius: 25%;
+    background-color: antiquewhite;
+}
+
+@media (max-width: 500px) {
+    .info {
+        display: block;
+        text-align: center;       
+    }
 }

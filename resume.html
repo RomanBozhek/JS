@@ -4,49 +4,82 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Roman Bozhek CV</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <table cellpadding="15">
-        <tr>
-            <td>
-                <img src="avatar.jpeg" alt="Roman Bozhek" width="100">
-            </td>
-            <td>
-                <strong>Roman Bozhek</strong><br>
-                <em>I like programming</em>
-            </td>
-        </tr>
-    </table>
-    <hr>
-    
-    <h1>My SM:</h1>
-    <ul>
-        <li><a href="https://instagram.com/cenzoenot">instagram</a></li>
-        <li><a href="https://facebook.com/">facebook</a></li>
-    </ul>
-    <hr>
+    <div class="container">
+        <div class="info">
+                <div class="info-pic">
+                    <img src="avatar.jpeg" class="avatar" alt="Roman Bozhek">
+                </div>
+                <div class="info-social">
+                    <h2>Roman Bozhek</h2>
+                    <em>I like programming</em><br><br>
+                    21 April 1987 <br><br>
+                    <a href="tel:+380673100433">+38 067 31 00 433</a><br>
+                    <a href="mailto:cenzoenot@gmail.com">cenzoenot@gmail.com</a><br><br>
+                    <a href="https://instagram.com/cenzoenot" target="_blank">instagram</a> |
+                    <a href="https://facebook.com/">facebook</a>
+                </div>
+        </div>
 
-    <h1>My Hobby:</h1>
-    <ol>
-        <li>football</li>
-        <li>cars</li>
-        <li>trevelling</li>
-    </ol>
-    <hr>
+        <div class="card bg-yellow work">
+            <h4>Work experience:</h4>
+            <table>
+                <tr><td width="100">2010 - now</td><td><strong> Rezonans-Plast </strong>(Khmelnytskyi)</td></tr>
+                <tr><td width="100">2009 - 2010</td><td><strong> AuditSoft </strong>(Khmelnytskyi)</td></tr>
+            </table>
+        </div>
 
-    <h1>Contact me:</h1>
-    <form>
-        <label for="name">Name: </label>
-        <input type="text" id="name" placeholder="input your name here">
-        <br>
-        <label for="email">E-mail: </label>
-        <input type="email" id="email" placeholder="input your e-mail here">
-        <br>
-        <textarea name="msg" id="msg" cols="30" rows="10"></textarea>
-        <br>
-        <input type="submit" value="send information">
-    </form>
+        <div class="card bg-rose education">
+            <h4>Education:</h4>
+            <table>
+                <tr><td width="100">2004 - 2010</td><td><strong> Khmelnytskyi National University </strong>(Informational technologies of designing | Finance)</td></tr>
+                <tr><td width="100">1993 - 2004</td><td><strong> Educational complex #7 </strong>(Khmelnytskyi)</td></tr>
+            </table>
+        </div>
+
+        <div class="interests">
+            <div class="card bg-green hobby">
+                <h4>Hobby:</h4>
+                <ul type="none">
+                    <li><img src="icons/football.png">football</li>
+                    <li><img src="icons/plane.png">treveling</li>
+                    <li><img src="icons/cars.png">cars</li>
+                </ul>
+            </div>
+            <div class="card bg-blue languages">
+                <h4>Languages spoken:</h4>
+                <ul>
+                    <li>Ukrainian (native), russian</li>
+                    <li>English, Polish (good level)</li>
+                    <li>German</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card bg-orange contact">
+            <h4>Contact me:</h4>
+            <form>
+                <div class="contact-info">
+                    <div class="contact-group">
+                        <label for="name">Name: </label>
+                        <input type="text" name="name" id="name" placeholder="input your name here">
+                    </div>
+                    <div class="contact-group">
+                        <label for="email">E-mail: </label>
+                        <input type="email" name="email" id="email" placeholder="input your e-mail here">
+                    </div>
+                </div>
+                <div class="contact-msg">
+                    <label for="msg">Message: </label>
+                    <textarea name="msg" id="msg" cols="30" rows="10" placeholder="type your message here"></textarea>
+                    <input type="submit" value="send information">
+                </div>
+            </form>
+        </div>
+
+    </div>
 </body>
 </html>
