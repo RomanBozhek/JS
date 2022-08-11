@@ -1,0 +1,101 @@
+div .weather-hour,
+div .weather-day {
+    border: 1px solid grey;
+    border-radius: 15px;
+    vertical-align: middle;
+}
+
+.container {
+    max-width: 400px;
+    margin: auto;
+    padding-top: 25px;
+    text-align: center;
+}
+
+.weather-hours {
+    white-space: nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+.weather-hour {
+    display: inline-block;
+    max-width: 100px;
+    text-align: center;
+    padding: 10px 5px;
+    margin: 0 1px;
+}
+
+.weather-day {
+    margin: 1px 0;
+}
+
+.weather-today {
+    padding-top: 20px;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.weather-7-days-container {
+    text-align: right;
+    max-width: 350px;
+    margin: 0 auto;
+}
+
+.weather-for-7-days {
+    text-align: left;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.third {
+    width: 33%;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.align-left {
+    text-align: left;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.margin-left-5 {
+    margin-left: 15px;
+}
+
+.progress1 {
+    background-color: white;
+    height: 100%;
+    position: absolute;
+    top: 0rem;
+    left: 0rem;
+    width: 25px;
+    border: none;
+  }
+  
+  .progress2 {
+    background-color: white;
+    height: 100%;
+    position: absolute;
+    top: 0rem;
+    left: 50;
+    width: 25px;
+    border: none;
+  }
+  
+  .progress {
+    background: linear-gradient(to right, rgb(47, 135, 243), rgb(247, 170, 26));
+    height: 0.5rem;
+    /* border: 1px solid grey; */
+    border: none;
+    position: relative;
+    width: 100px;
+    vertical-align: middle;
+  }

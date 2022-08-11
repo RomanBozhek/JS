@@ -71,6 +71,10 @@ a:active {
     background-color: rgb(234, 212, 170);
 }
 
+.bg-grey {
+    background-color: lightgrey;
+}
+
 .interests {
     display: flex;
 }
