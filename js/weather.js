@@ -3,9 +3,9 @@ let longitude = ''
 
 // starting geometry.location
 
-// // KYIV, UKRAINE
-// latitude = '50.4422'
-// longitude = '30.5367'
+// KYIV, UKRAINE
+latitude = '50.4422'
+longitude = '30.5367'
 
 // // KHMELNYTSKYI, UKRAINE
 // latitude = '49.422983' 
@@ -46,7 +46,7 @@ function sendRequest(method, url) {
 function getWeatherByLocation(city, country) {
     sendRequest('GET', weatherRequestURL())
     .then((data) => {
-        // console.log(data)
+        console.log(data)
         changeElementById('city-location', city)
         changeElementById('country-location', country)
         changeElementById('temperature-now', Math.round(data.hourly.temperature_2m[0]))
@@ -284,7 +284,6 @@ function putPicByWeather(weatherCode, picId, imgWidth = 64) {
     
     document.getElementById(picId).src = imgSrc
     document.getElementById(picId).width = imgWidth
-    console.log('src: ', imgSrc, 'width: ', imgWidth)
 }
 
 function getImgCodeHTMLByWeatherCode(weatherCode, width = 32) {
@@ -317,7 +316,7 @@ function getImgCodeHTMLByWeatherCode(weatherCode, width = 32) {
 
 function getDayOfWeek(date) {
     const day = date.getDay()
-    const week = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
+    const week = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
     return week[day]
 }
 
@@ -325,6 +324,7 @@ function getDayOfWeek(date) {
 function initMap() {
     // The location of Uluru
     const uluru = { lat: parseFloat(latitude), lng: parseFloat(longitude) }
+    console.log(uluru)
     // The map, centered at Uluru
     const map = new google.maps.Map(document.getElementById("map"), {
       zoom: 6,
@@ -337,7 +337,7 @@ function initMap() {
     })
 }
 
-window.initMap = initMap 
+// window.initMap = initMap 
 
 function searchWeatherFromAddress() {
     const searchLocation = document.getElementById('search')
