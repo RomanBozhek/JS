@@ -1,7 +1,31 @@
-let latitude = '50.4422'
-let longitude = '30.5367'
-const requestURL = 'https://api.open-meteo.com/v1/forecast?latitude=' + latitude 
-    + '&longitude=' + longitude + '&hourly=temperature_2m,precipitation,rain,showers,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum&timezone=auto'
+let latitude = ''
+let longitude = ''
+
+// starting geometry.location
+
+// // KYIV, UKRAINE
+// latitude = '50.4422'
+// longitude = '30.5367'
+
+// // KHMELNYTSKYI, UKRAINE
+// latitude = '49.422983' 
+// longitude = '26.987133'
+
+document.getElementById('search').addEventListener('keydown', function(event) {
+    if (event.key == 'Enter') { searchWeatherFromAddress()}
+})
+
+function weatherRequestURL() {
+    url = 'https://api.open-meteo.com/v1/forecast?latitude=' + latitude + '&longitude=' + longitude 
+        + '&hourly=temperature_2m,precipitation,rain,showers,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum&timezone=auto'
+    return url
+}
+
+function latLonRequestURL(search) {
+    url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' 
+            + search + '&key=AIzaSyA9R30QTxtTkp6xwqr0FL7Q4I2c20VatZs'
+    return url
+}
 
 function sendRequest(method, url) {
     const headers = {
@@ -19,19 +43,23 @@ function sendRequest(method, url) {
     })
 }
 
-sendRequest('GET', requestURL)
+function getWeatherByLocation(city, country) {
+    sendRequest('GET', weatherRequestURL())
     .then((data) => {
-        console.log(data)
+        // console.log(data)
+        changeElementById('city-location', city)
+        changeElementById('country-location', country)
         changeElementById('temperature-now', Math.round(data.hourly.temperature_2m[0]))
         putPicByWeather(data.hourly.weathercode[0], 'pic-weather-now', 64)
-        changeElementById('description-now-w', decodeWeatherCode(data.hourly.weathercode[0]))
+        changeElementById('description-now-w', ('now: ' + decodeWeatherCode(data.hourly.weathercode[0])))
         changeElementById('max-temperature', Math.round(data.daily.temperature_2m_max[0]))
         changeElementById('min-temperature', Math.round(data.daily.temperature_2m_min[0]))
-        changeElementById('description-today-w', decodeWeatherCode(data.daily.weathercode[0]))
+        changeElementById('description-today-w', ('today: ' + decodeWeatherCode(data.daily.weathercode[0])))
         forecastFor24Hours(data)
         forecastFor7days(data)
     })
     .catch((error) => {console.error(error)})
+}
 
 function changeElementById(id, newValue) {
     const element = document.getElementById(id)
@@ -40,6 +68,7 @@ function changeElementById(id, newValue) {
 
 function forecastFor24Hours(data) {
     const parentElement = document.getElementById('forecast-24-hours-sunset-sunrise')
+    parentElement.innerHTML = ''
     
     const divSunrise = document.createElement('div')
     divSunrise.classList.add('weather-hour')
@@ -76,6 +105,7 @@ function forecastFor24Hours(data) {
 
 function forecastFor7days(data) {
     const parentElement = document.getElementById('forecast-for-7-days')
+    parentElement.innerHTML = ''
     for (let i = 0; i < 7; i++) {
         // main div
         const divDay = document.createElement('div')
@@ -229,7 +259,7 @@ function decodeWeatherCode(code) {
     }
 }
 
-function putPicByWeather(weatherCode, parentId, imgWidth = 64) {
+function putPicByWeather(weatherCode, picId, imgWidth = 64) {
     let imgSrc = ''
     
     if ((weatherCode > 0) && (weatherCode < 3)) {
@@ -252,11 +282,9 @@ function putPicByWeather(weatherCode, parentId, imgWidth = 64) {
         imgSrc = 'icons/weather/thunderstorm.png'
     } else {imgSrc = 'icons/weather/sun.png'}
     
-    const parentElement = document.getElementById(parentId)
-    const img = document.createElement('img')
-    img.src = imgSrc
-    img.width = imgWidth
-    parentElement.appendChild(img)
+    document.getElementById(picId).src = imgSrc
+    document.getElementById(picId).width = imgWidth
+    console.log('src: ', imgSrc, 'width: ', imgWidth)
 }
 
 function getImgCodeHTMLByWeatherCode(weatherCode, width = 32) {
@@ -292,3 +320,43 @@ function getDayOfWeek(date) {
     const week = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
     return week[day]
 }
+
+// Initialize and add the map
+function initMap() {
+    // The location of Uluru
+    const uluru = { lat: parseFloat(latitude), lng: parseFloat(longitude) }
+    // The map, centered at Uluru
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 6,
+      center: uluru,
+    })
+    // The marker, positioned at Uluru
+    const marker = new google.maps.Marker({
+      position: uluru,
+      map: map,
+    })
+}
+
+window.initMap = initMap 
+
+function searchWeatherFromAddress() {
+    const searchLocation = document.getElementById('search')
+    if (searchLocation.value != '') {
+        sendRequest('GET', latLonRequestURL(searchLocation.value))
+            .then((data) => {
+                searchLocation.value = ''
+                console.log(data)
+                latitude = data.results[0].geometry.location.lat
+                longitude = data.results[0].geometry.location.lng
+                // console.log('lat: ', latitude, 'lon: ', longitude)
+                const city = data.results[0].address_components[0].short_name
+                const country = data.results[0].address_components[data.results[0].address_components.length - 2].short_name
+                getWeatherByLocation(city, country)
+                initMap()
+            })  
+            .catch((err) => {console.error(err)})    
+    }
+}
+
+// starting point
+searchWeatherFromAddress()
