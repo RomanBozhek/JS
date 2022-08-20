@@ -1,116 +1,86 @@
-#search {
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#input-location {
+    display: flex;
+}
+
+#search-input {
     display: inline-block;
-    max-width: 400px;
-    height: 30px;
-    padding: 0 20px;
+    border: 1px solid darkgrey;
+    padding: 0;
+    padding-left: 5px;
+    width: 495px;
+    max-width: calc(100%-100px);
     border-radius: 5px;
-    border: 1px solid grey;
+    height: 20px;
+    box-sizing: border-box;
 }
 
 #search-btn {
-    display: inline-block;
-    height: 30px;
-    width: 80px;
-    padding: 0 20px;
-    border-radius: 5px;
+    width: 100px;
     border: 1px solid darkgrey;
+    border-radius: 5px;
+    padding: 0;
+    height: 20px;
+    box-sizing: border-box;
+    margin-left: 5px;
 }
 
-div .weather-hour,
-div .weather-day {
+#weather-map {
+    display: flex;
+    margin: 10px 0;
+}
+
+#weather-now {
+    width: 150px;
+    height: 250px;
+    box-sizing: border-box;
+}
+
+#map {
+    width: 450px;
+    height: 250px;
+    box-sizing: border-box;
+    border-radius: 10px;
     border: 1px solid grey;
-    border-radius: 15px;
-    vertical-align: middle;
 }
 
-.container {
-    max-width: 400px;
-    margin: auto;
-    padding-top: 25px;
-    text-align: center;
-}
+/* #map .gm-fullscreen-control,
+#map .gmnoprint {
+    visibility: collapse;
+} */
 
-.weather-now {
-    max-width: 120px;
-    vertical-align: top;
-    padding-top: 0px;
-}
-
-.weather-map {
-    max-width: 400px;
-}
-
-.weather-hours {
+#forecast-24-hours-sunset-sunrise {
+    display: flex;
     white-space: nowrap;
     overflow-x: scroll;
     overflow-y: hidden;
 }
 
 .weather-hour {
-    display: inline-block;
-    max-width: 100px;
-    text-align: center;
-    padding: 10px 5px;
+    border: 1px solid grey;
+    border-radius: 10px;
+    box-sizing: border-box;
     margin: 0 1px;
+    padding: 5px;
+}
+
+#forecast-for-7-days {
+    margin: 10px auto;
 }
 
 .weather-day {
+    border: 1px solid grey;
+    border-radius: 10px;
     margin: 1px 0;
-}
-
-.weather-now,
-.map-container {
-    display: inline-block;
-    margin: 0, auto;
-}
-
-.weather-today, 
-.map-container {
-    padding-top: 10px;
-    text-align: left;
-    margin-bottom: 20px;
-}
-
-#description-today-w,
-.weather-for-7-days, 
-.map-description {
-    padding-left: 10px;
-}
-
-.weather-7-days-container, 
-.map-container {
-    text-align: center;
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-.weather-for-7-days,
-.map-description {
-    text-align: left;
-}
-
-.inline-block {
-    display: inline-block;
-}
-
-.third {
-    width: 33%;
-}
-
-.align-right {
-    text-align: right;
-}
-
-.align-left {
-    text-align: left;
-}
-
-.align-center {
     text-align: center;
 }
 
-.margin-left-5 {
-    margin-left: 15px;
+.weather-day div {
+    display: inline-block;
 }
 
 .progress1 {
@@ -136,19 +106,8 @@ div .weather-day {
   .progress {
     background: linear-gradient(to right, rgb(47, 135, 243), rgb(247, 170, 26));
     height: 0.5rem;
-    /* border: 1px solid grey; */
     border: none;
     position: relative;
     width: 100px;
     vertical-align: middle;
-  }
-
-  /* Set the size of the div element that contains the map */
-#map {
-    height: 275px;
-    /* The height is 400 pixels */
-    width: 275px;
-    /* The width is the width of the web page */
-    border: 1px solid grey;
-    border-radius: 15px;
   }

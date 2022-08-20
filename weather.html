@@ -10,56 +10,39 @@
 </head>
 <body>
     <div class="container">
-        <div class="input-location">
-            <input type="text" name="search" id="search" placeholder="input your city / location" value="Kyiv" onsubmit="searchWeatherFromAddress()">
-            <input type="button" id="search-btn" value="search" onclick="searchWeatherFromAddress()">
+        <div id="input-location">
+            <input type="text" name="search" id="search-input" placeholder="input your city / location" value="Львів">
+            <input type="button" id="search-btn" value="search" onclick="searchWeatherFromSearchBox()">
         </div>
         <div id="weather-map">
-            <div class="weather-now">
+            <div id="weather-now">
                 <div class="location">
-                    <h4 id="city-location">Kyiv</h4>
-                    <h4 id="country-location">Ukraine</h4>
+                    <h4 id="city-location">City</h4>
                 </div>
                 <div class="temperature-now">
-                    <h2><span id="temperature-now">27</span><sup>o</sup></h2>
+                    <h2><span id="temperature-now">Temprature</span><sup>o</sup></h2>
                 </div>
                 <div id="img-now">
-                    <!-- place for a picture -->
                     <img src="icons/weather/sun.png" width="64" id="pic-weather-now" alt="">
                 </div>
-                <div id="description-now-w">
-                    sunny
-                </div>
                 <div class="temperature-max-min">
-                    min: <span id="min-temperature">33</span><sup>o</sup> max: <span id="max-temperature">19</span><sup>o</sup>
+                    min: <span id="min-temperature">Temprature</span><sup>o</sup><br>max: <span id="max-temperature">19</span><sup>o</sup>
                 </div>
             </div>
-            <div class="map-container">
-                <div class="map-description">Location</div>
-                <div id="map">
-                    <!-- put google map here -->
-                </div>
+            <div id="map-container">
+                <div id="map"></div>
             </div>
         </div>
-        <div class="weather-today">
-            <div id="description-today-w">
-                mostly sunny. rain after 15-00
-            </div>
-            <div id="forecast-24-hours-sunset-sunrise" class="weather-hours">
-                <!-- put weather forecast for 24 hours with sunset and sunrise here -->
-            </div>
+        <div id="weather-today">
+            <div id="forecast-24-hours-sunset-sunrise" class="weather-hours"></div>
         </div>
-        <div class="weather-7-days-container">
-            <div class="weather-for-7-days">Forecast for 7 days</div>
-            <div id="forecast-for-7-days">
-                <!-- put weather forecast for 7 days here -->
-            </div>
+        <div id="weather-7-days-container">
+            <div id="forecast-for-7-days"></div>
         </div>
     </div>
 <script type="text/JavaScript" src="js/weather.js"></script>
-<!-- <script type="module" src="js/google-map.js"></script> -->
 <script async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9R30QTxtTkp6xwqr0FL7Q4I2c20VatZs&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9R30QTxtTkp6xwqr0FL7Q4I2c20VatZs&callback=updateMap">
 </script>
 </body>
 </html>

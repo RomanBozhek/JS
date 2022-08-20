@@ -1,33 +1,92 @@
-let latitude = ''
-let longitude = ''
+let latitude = '0'
+let longitude = '0'
 
-// starting geometry.location
+let city = ''
 
-// KYIV, UKRAINE
-latitude = '50.4422'
-longitude = '30.5367'
+let picImgSrc = []
+picImgSrc[0] = 'icons/weather/sun.png'
+picImgSrc[1] = 'icons/weather/cloudy.png'
+picImgSrc[2] = 'icons/weather/cloudy.png'
+picImgSrc[3] = 'icons/weather/overcast.png'
+picImgSrc[45] = 'icons/weather/fog.png'
+picImgSrc[46] = 'icons/weather/fog.png'
+picImgSrc[47] = 'icons/weather/fog.png'
+picImgSrc[48] = 'icons/weather/fog.png'
+picImgSrc[51] = 'icons/weather/drizzle.png'
+picImgSrc[52] = 'icons/weather/drizzle.png'
+picImgSrc[53] = 'icons/weather/drizzle.png'
+picImgSrc[54] = 'icons/weather/drizzle.png'
+picImgSrc[55] = 'icons/weather/drizzle.png'
+picImgSrc[56] = 'icons/weather/drizzle.png'
+picImgSrc[57] = 'icons/weather/drizzle.png'
+picImgSrc[61] = 'icons/weather/rain.png'
+picImgSrc[62] = 'icons/weather/rain.png'
+picImgSrc[63] = 'icons/weather/rain.png'
+picImgSrc[64] = 'icons/weather/rain.png'
+picImgSrc[65] = 'icons/weather/rain.png'
+picImgSrc[66] = 'icons/weather/rain.png'
+picImgSrc[67] = 'icons/weather/rain.png'
+picImgSrc[71] = 'icons/weather/snow.png'
+picImgSrc[72] = 'icons/weather/snow.png'
+picImgSrc[73] = 'icons/weather/snow.png'
+picImgSrc[74] = 'icons/weather/snow.png'
+picImgSrc[75] = 'icons/weather/snow.png'
+picImgSrc[80] = 'icons/weather/rain.png'
+picImgSrc[81] = 'icons/weather/rain.png'
+picImgSrc[82] = 'icons/weather/rain.png'
+picImgSrc[85] = 'icons/weather/snow.png'
+picImgSrc[86] = 'icons/weather/snow.png'
+picImgSrc[95] = 'icons/weather/thunderstorm.png'
+picImgSrc[96] = 'icons/weather/thunderstorm.png'
+picImgSrc[97] = 'icons/weather/thunderstorm.png'
+picImgSrc[98] = 'icons/weather/thunderstorm.png'
+picImgSrc[99] = 'icons/weather/thunderstorm.png'
 
-// // KHMELNYTSKYI, UKRAINE
-// latitude = '49.422983' 
-// longitude = '26.987133'
+let weatherCodeStr = []
+weatherCodeStr[0] = 'Clear sky'
+weatherCodeStr[1] = 'Mainly clear'
+weatherCodeStr[2] = 'Partly cloudy'
+weatherCodeStr[3] = 'Overcast'
+weatherCodeStr[45] = 'Fog'
+weatherCodeStr[48] = 'Depositing rime fog'
+weatherCodeStr[51] = 'Light drizzle'
+weatherCodeStr[53] = 'Moderate drizzle'
+weatherCodeStr[55] = 'Dense intensity drizzle'
+weatherCodeStr[56] = 'Light freezing drizzle'
+weatherCodeStr[57] = 'Dense intensity freezing drizzle'
+weatherCodeStr[61] = 'Slight rain'
+weatherCodeStr[63] = 'Moderate rain'
+weatherCodeStr[65] = 'Heavy intensity rain'
+weatherCodeStr[66] = 'Light freezing rain'
+weatherCodeStr[67] = 'Heavy intensity freezing rain'
+weatherCodeStr[71] = 'Slight snow fall'
+weatherCodeStr[73] = 'Moderate snow fall'
+weatherCodeStr[75] = 'Heavy intensity snow fall'
+weatherCodeStr[80] = 'Rain showers: slight'
+weatherCodeStr[81] = 'Rain showers: moderate'
+weatherCodeStr[82] = 'Rain showers: violent'
+weatherCodeStr[85] = 'Snow showers: slight'
+weatherCodeStr[86] = 'Snow showers: heavy'
+weatherCodeStr[95] = 'Thunderstorm: slight or moderate'
+weatherCodeStr[96] = 'Thunderstorm with slight hail'
+weatherCodeStr[99] = 'Thunderstorm with heavy hail'
 
-document.getElementById('search').addEventListener('keydown', function(event) {
-    if (event.key == 'Enter') { searchWeatherFromAddress()}
+document.getElementById('search-input').addEventListener('keydown', function(event) {
+    if (event.key == 'Enter') {searchWeatherFromSearchBox()}
 })
 
-function weatherRequestURL() {
-    url = 'https://api.open-meteo.com/v1/forecast?latitude=' + latitude + '&longitude=' + longitude 
-        + '&hourly=temperature_2m,precipitation,rain,showers,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum&timezone=auto'
-    return url
+function makeRequestURLToGoogleMaps(locationName) {
+    return 'https://maps.googleapis.com/maps/api/geocode/json?address=' 
+            + locationName + '&key=AIzaSyA9R30QTxtTkp6xwqr0FL7Q4I2c20VatZs'
 }
 
-function latLonRequestURL(search) {
-    url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' 
-            + search + '&key=AIzaSyA9R30QTxtTkp6xwqr0FL7Q4I2c20VatZs'
-    return url
+function makewRequestURLToWeatherServer() {
+    return 'https://api.open-meteo.com/v1/forecast?latitude=' + latitude + '&longitude=' + longitude 
+        + '&hourly=temperature_2m,precipitation,rain,showers,weathercode&daily=' 
+        + 'weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum&timezone=auto'
 }
 
-function sendRequest(method, url) {
+function sendRequestToServer(method, url) {
     const headers = {
         'Content-Type': 'application/json'
     }
@@ -43,27 +102,38 @@ function sendRequest(method, url) {
     })
 }
 
-function getWeatherByLocation(city, country) {
-    sendRequest('GET', weatherRequestURL())
-    .then((data) => {
-        console.log(data)
-        changeElementById('city-location', city)
-        changeElementById('country-location', country)
-        changeElementById('temperature-now', Math.round(data.hourly.temperature_2m[0]))
-        putPicByWeather(data.hourly.weathercode[0], 'pic-weather-now', 64)
-        changeElementById('description-now-w', ('now: ' + decodeWeatherCode(data.hourly.weathercode[0])))
-        changeElementById('max-temperature', Math.round(data.daily.temperature_2m_max[0]))
-        changeElementById('min-temperature', Math.round(data.daily.temperature_2m_min[0]))
-        changeElementById('description-today-w', ('today: ' + decodeWeatherCode(data.daily.weathercode[0])))
-        forecastFor24Hours(data)
-        forecastFor7days(data)
-    })
-    .catch((error) => {console.error(error)})
-}
-
 function changeElementById(id, newValue) {
     const element = document.getElementById(id)
     element.textContent = newValue
+}
+
+function changePicByWeather(weatherCode, picId, imgWidth = 64) {
+    picture = document.getElementById(picId)
+    picture.width = imgWidth
+    picture.src = getImgSrcByWeatherCode(weatherCode)
+}
+
+function getImgSrcByWeatherCode(code) {
+    if (picImgSrc[code] != '') {
+        return picImgSrc[code]
+    } else return 'icons/weather/sun.png'
+}
+
+function updateMap() {
+    const location = { lat: parseFloat(latitude), lng: parseFloat(longitude) }
+    const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 6,
+        center: location,
+        zoomControl: true,
+        mapTypeControl: false,
+        scaleControl: true,
+        streetViewControl: false,
+        fullscreenControl: false,
+    })
+    const marker = new google.maps.Marker({
+      position: location,
+      map: map,
+    })
 }
 
 function forecastFor24Hours(data) {
@@ -89,8 +159,8 @@ function forecastFor24Hours(data) {
         divHour.classList.add('weather-hour')
         if (i === 0) {divHour.innerHTML = 'now<br>'} 
         else {divHour.innerHTML = time.getHours() + ':00<br>'}
-        divHour.innerHTML += getImgCodeHTMLByWeatherCode(data.hourly.weathercode[i + hoursNow], 32) + '<br>'
-            + Math.round(data.hourly.temperature_2m[i + hoursNow]) + '<sup>o</sup>'
+        divHour.innerHTML += '<img src=' + getImgSrcByWeatherCode(data.hourly.weathercode[i + hoursNow])
+            + ' width=32>' + '<br>' + Math.round(data.hourly.temperature_2m[i + hoursNow]) + '<sup>o</sup>'
         parentElement.appendChild(divHour)
         if ((tSunrise.getHours() >= time.getHours()) && (tSunrise.getHours() < (time.getHours() + 1))) {
             divSunrise.innerHTML += Math.round(data.hourly.temperature_2m[i + hoursNow]) + '<sup>o</sup>'
@@ -103,43 +173,36 @@ function forecastFor24Hours(data) {
     }
 }
 
+function getDayOfWeek(date) {
+    const day = date.getDay()
+    const week = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
+    return week[day]
+}
+
 function forecastFor7days(data) {
     const parentElement = document.getElementById('forecast-for-7-days')
     parentElement.innerHTML = ''
     for (let i = 0; i < 7; i++) {
-        // main div
         const divDay = document.createElement('div')
         divDay.classList.add('weather-day')
-        // 1 div containing name of the day
         const divDay1Day = document.createElement('div')
-        divDay1Day.classList.add('align-left', 'inline-block')
         divDay1Day.style.width = '60px'
-        // 2 div containing picture of weather
         const divDay2Pic = document.createElement('div')
-        divDay2Pic.classList.add('align-left', 'inline-block')
         divDay2Pic.style.width = '40px'
-        // 3 div containing min temperature
         const divDay3MinT = document.createElement('div')
-        divDay3MinT.classList.add('align-center', 'inline-block')
         divDay3MinT.width = '30px'
-        // 4 div containing temperature bar
         const divDay4Bar = document.createElement('div')
-        divDay4Bar.classList.add('progress', 'inline-block', 'align-center')
+        divDay4Bar.classList.add('progress')
         divDay4Bar.style.width = '100px'
         divDay4Bar.style.margin = '0 10px'
-        // 5 div containing max temperature
         const divDay5MaxT = document.createElement('div')
-        divDay5MaxT.classList.add('align-center', 'inline-block')
         divDay5MaxT.style.width = '30px'
-        // divDay1Day
+        
         if (i != 0) {
             divDay1Day.innerHTML = getDayOfWeek(new Date(data.daily.time[i]))
         } else { divDay1Day.innerHTML = 'today'}
-        // divDay2Pic
-        divDay2Pic.innerHTML = getImgCodeHTMLByWeatherCode(data.daily.weathercode[i], 16)
-        // divDay3MinT
+        divDay2Pic.innerHTML = '<img src=' + getImgSrcByWeatherCode(data.daily.weathercode[i]) + ' width=16>'
         divDay3MinT.innerHTML = Math.round(data.daily.temperature_2m_min[i]) + '<sup>o</sup>'
-        // divDay4Bar
         const maxT = Math.round(Math.max(...data.daily.temperature_2m_max))
         const minT = Math.round(Math.min(...data.daily.temperature_2m_min))
         const per1Deg = 100 / (maxT - minT)
@@ -158,10 +221,8 @@ function forecastFor7days(data) {
             progressRight.style.left = 100 - (Math.round(rightDifference * per1Deg)) + 'px'
             divDay4Bar.appendChild(progressRight)
         }
-        // divDay5MaxT
         divDay5MaxT.innerHTML = Math.round(data.daily.temperature_2m_max[i]) + '<sup>o</sup>'
         
-        // divDay construct
         divDay.appendChild(divDay1Day)
         divDay.appendChild(divDay2Pic)
         divDay.appendChild(divDay3MinT)
@@ -171,192 +232,34 @@ function forecastFor7days(data) {
     }
 }
 
-function decodeWeatherCode(code) {
-    switch(code) {
-        case 0:
-            return 'Clear sky'
-            break
-        case 1:
-            return 'Mainly clear'
-            break
-        case 2:
-            return 'Partly cloudy'
-            break
-        case 3:
-            return 'Overcast'
-            break
-        case 45:
-            return 'Fog'
-            break
-        case 48:
-            return 'Depositing rime fog'
-            break
-        case 51:
-            return 'Light drizzle'
-            break
-        case 53:
-            return 'Moderate drizzle'
-            break
-        case 55:
-            return 'Dense intensity drizzle'
-            break
-        case 56:
-            return 'Light freezing drizzle'
-            break
-        case 57:
-            return 'Dense intensity freezing drizzle'
-            break
-        case 61:
-            return 'Slight rain'
-            break
-        case 63:
-            return 'Moderate rain'
-            break
-        case 65: 
-            return 'Heavy intensity rain'
-            break
-        case 66:
-            return 'Light freezing rain'
-            break
-        case 67:
-            return 'Heavy intensity freezing rain'
-            break
-        case 71:
-            return 'Slight snow fall'
-            break
-        case 73:
-            return 'Moderate snow fall'
-            break
-        case 75:
-            return 'Heavy intensity snow fall'
-            break
-        case 80:
-            return 'Rain showers: slight'
-            break
-        case 81:
-            return 'Rain showers: moderate'
-            break
-        case 82:
-            return 'Rain showers: violent'
-            break
-        case 85:
-            return 'Snow showers: slight'
-            break
-        case 86:
-            return 'Snow showers: heavy'
-            break
-        case 95:
-            return 'Thunderstorm: slight or moderate'
-            break
-        case 96:
-            return 'Thunderstorm with slight hail'
-            break
-        case 99:
-            return 'Thunderstorm with heavy hail'
-            break
-        default:
-            return 'Normal weather'
-    }
-}
-
-function putPicByWeather(weatherCode, picId, imgWidth = 64) {
-    let imgSrc = ''
-    
-    if ((weatherCode > 0) && (weatherCode < 3)) {
-        imgSrc = 'icons/weather/cloudy.png'
-    } else if (weatherCode === 3) {
-        imgSrc = 'icons/weather/overcast.png'
-    } else if ((weatherCode >= 45) && (weatherCode <= 48)) {
-        imgSrc = 'icons/weather/fog.png'
-    } else if ((weatherCode >= 51) && (weatherCode <= 57)) {
-        imgSrc = 'icons/weather/drizzle.png'
-    } else if ((weatherCode >= 61) && (weatherCode <= 67)) {
-        imgSrc = 'icons/weather/rain.png'
-    } else if ((weatherCode >= 71) && (weatherCode <= 75)) {
-        imgSrc = 'icons/weather/snow.png'
-    } else if ((weatherCode >= 80) && (weatherCode <= 82)) {
-        imgSrc = 'icons/weather/rain.png' 
-    } else if ((weatherCode >= 85) && (weatherCode <= 86)) {
-        imgSrc = 'icons/weather/snow.png'
-    } else if ((weatherCode >= 95) && (weatherCode <= 99)) {
-        imgSrc = 'icons/weather/thunderstorm.png'
-    } else {imgSrc = 'icons/weather/sun.png'}
-    
-    document.getElementById(picId).src = imgSrc
-    document.getElementById(picId).width = imgWidth
-}
-
-function getImgCodeHTMLByWeatherCode(weatherCode, width = 32) {
-    let imgElement = '<img '
-    imgSrc = ''
-
-    if ((weatherCode > 0) && (weatherCode < 3)) {
-        imgSrc += 'icons/weather/cloudy.png'
-    } else if (weatherCode === 3) {
-        imgSrc += 'icons/weather/overcast.png'
-    } else if ((weatherCode >= 45) && (weatherCode <= 48)) {
-        imgSrc += 'icons/weather/fog.png'
-    } else if ((weatherCode >= 51) && (weatherCode <= 57)) {
-        imgSrc += 'icons/weather/drizzle.png'
-    } else if ((weatherCode >= 61) && (weatherCode <= 67)) {
-        imgSrc = 'icons/weather/rain.png'
-    } else if ((weatherCode >= 71) && (weatherCode <= 75)) {
-        imgSrc = 'icons/weather/snow.png'
-    } else if ((weatherCode >= 80) && (weatherCode <= 82)) {
-        imgSrc = 'icons/weather/rain.png' 
-    } else if ((weatherCode >= 85) && (weatherCode <= 86)) {
-        imgSrc = 'icons/weather/snow.png'
-    } else if ((weatherCode >= 95) && (weatherCode <= 99)) {
-        imgSrc += 'icons/weather/thunderstorm.png'
-    } else {imgSrc += 'icons/weather/sun.png'}
-
-    imgElement += 'src = "' + imgSrc + '" width = ' + width + '>'
-    return imgElement
-}
-
-function getDayOfWeek(date) {
-    const day = date.getDay()
-    const week = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
-    return week[day]
-}
-
-// Initialize and add the map
-function initMap() {
-    // The location of Uluru
-    const uluru = { lat: parseFloat(latitude), lng: parseFloat(longitude) }
-    console.log(uluru)
-    // The map, centered at Uluru
-    const map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 6,
-      center: uluru,
+function updateWeatherInfo() {
+    sendRequestToServer('GET', makewRequestURLToWeatherServer())
+    .then((data) => {
+        changeElementById('city-location', city)
+        changeElementById('temperature-now', Math.round(data.hourly.temperature_2m[0]))
+        changePicByWeather(data.hourly.weathercode[0], 'pic-weather-now', 64)
+        changeElementById('max-temperature', Math.round(data.daily.temperature_2m_max[0]))
+        changeElementById('min-temperature', Math.round(data.daily.temperature_2m_min[0]))
+        updateMap()
+        forecastFor24Hours(data)
+        forecastFor7days(data)
     })
-    // The marker, positioned at Uluru
-    const marker = new google.maps.Marker({
-      position: uluru,
-      map: map,
-    })
+    .catch((error) => {console.error(error)})
 }
 
-// window.initMap = initMap 
-
-function searchWeatherFromAddress() {
-    const searchLocation = document.getElementById('search')
+function searchWeatherFromSearchBox() {
+    const searchLocation = document.getElementById('search-input')
     if (searchLocation.value != '') {
-        sendRequest('GET', latLonRequestURL(searchLocation.value))
+        sendRequestToServer('GET', makeRequestURLToGoogleMaps(searchLocation.value))
             .then((data) => {
                 searchLocation.value = ''
-                console.log(data)
                 latitude = data.results[0].geometry.location.lat
                 longitude = data.results[0].geometry.location.lng
-                // console.log('lat: ', latitude, 'lon: ', longitude)
-                const city = data.results[0].address_components[0].short_name
-                const country = data.results[0].address_components[data.results[0].address_components.length - 2].short_name
-                getWeatherByLocation(city, country)
-                initMap()
+                city = data.results[0].address_components[0].short_name
+                updateWeatherInfo()
             })  
             .catch((err) => {console.error(err)})    
     }
 }
 
-// starting point
-searchWeatherFromAddress()
+searchWeatherFromSearchBox()
