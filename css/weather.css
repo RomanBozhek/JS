@@ -48,11 +48,6 @@
     border: 1px solid grey;
 }
 
-/* #map .gm-fullscreen-control,
-#map .gmnoprint {
-    visibility: collapse;
-} */
-
 #forecast-24-hours-sunset-sunrise {
     display: flex;
     white-space: nowrap;
@@ -83,6 +78,18 @@
     display: inline-block;
 }
 
+.divDay1 {
+    width: 60px;
+}
+
+.divDay2 {
+    width: 40px;
+}
+
+.divDay5 {
+    width: 30px;
+}
+
 .progress1 {
     background-color: white;
     height: 100%;
@@ -109,5 +116,6 @@
     border: none;
     position: relative;
     width: 100px;
+    margin: 0 10px;
     vertical-align: middle;
   }

@@ -5,13 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script data-main="js/app-weather" src="lib/require.js"></script>
     <link rel="stylesheet" href="css/weather.css">
     <title>Weather Forecast</title>
 </head>
 <body>
     <div class="container">
         <div id="input-location">
-            <input type="text" name="search" id="search-input" placeholder="input your city / location" value="Львів">
+            <input type="text" name="search" id="search-input" placeholder="input your city / location" 
+            value="Tbilisi">
             <input type="button" id="search-btn" value="search" onclick="searchWeatherFromSearchBox()">
         </div>
         <div id="weather-map">
@@ -26,7 +28,8 @@
                     <img src="icons/weather/sun.png" width="64" id="pic-weather-now" alt="">
                 </div>
                 <div class="temperature-max-min">
-                    min: <span id="min-temperature">Temprature</span><sup>o</sup><br>max: <span id="max-temperature">19</span><sup>o</sup>
+                    min: <span id="min-temperature">Temprature</span><sup>o</sup><br>
+                    max: <span id="max-temperature">Temprature</span><sup>o</sup>
                 </div>
             </div>
             <div id="map-container">
@@ -40,9 +43,9 @@
             <div id="forecast-for-7-days"></div>
         </div>
     </div>
-<script type="text/JavaScript" src="js/weather.js"></script>
 <script async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9R30QTxtTkp6xwqr0FL7Q4I2c20VatZs&callback=updateMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9R30QTxtTkp6xwqr0FL7Q4I2c20VatZs">
 </script>
+<!-- src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9R30QTxtTkp6xwqr0FL7Q4I2c20VatZs&callback=updateMap"> -->
 </body>
 </html>

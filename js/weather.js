@@ -1,95 +1,20 @@
-let latitude = '0'
-let longitude = '0'
-
-let city = ''
-
-let picImgSrc = []
-picImgSrc[0] = 'icons/weather/sun.png'
-picImgSrc[1] = 'icons/weather/cloudy.png'
-picImgSrc[2] = 'icons/weather/cloudy.png'
-picImgSrc[3] = 'icons/weather/overcast.png'
-picImgSrc[45] = 'icons/weather/fog.png'
-picImgSrc[46] = 'icons/weather/fog.png'
-picImgSrc[47] = 'icons/weather/fog.png'
-picImgSrc[48] = 'icons/weather/fog.png'
-picImgSrc[51] = 'icons/weather/drizzle.png'
-picImgSrc[52] = 'icons/weather/drizzle.png'
-picImgSrc[53] = 'icons/weather/drizzle.png'
-picImgSrc[54] = 'icons/weather/drizzle.png'
-picImgSrc[55] = 'icons/weather/drizzle.png'
-picImgSrc[56] = 'icons/weather/drizzle.png'
-picImgSrc[57] = 'icons/weather/drizzle.png'
-picImgSrc[61] = 'icons/weather/rain.png'
-picImgSrc[62] = 'icons/weather/rain.png'
-picImgSrc[63] = 'icons/weather/rain.png'
-picImgSrc[64] = 'icons/weather/rain.png'
-picImgSrc[65] = 'icons/weather/rain.png'
-picImgSrc[66] = 'icons/weather/rain.png'
-picImgSrc[67] = 'icons/weather/rain.png'
-picImgSrc[71] = 'icons/weather/snow.png'
-picImgSrc[72] = 'icons/weather/snow.png'
-picImgSrc[73] = 'icons/weather/snow.png'
-picImgSrc[74] = 'icons/weather/snow.png'
-picImgSrc[75] = 'icons/weather/snow.png'
-picImgSrc[80] = 'icons/weather/rain.png'
-picImgSrc[81] = 'icons/weather/rain.png'
-picImgSrc[82] = 'icons/weather/rain.png'
-picImgSrc[85] = 'icons/weather/snow.png'
-picImgSrc[86] = 'icons/weather/snow.png'
-picImgSrc[95] = 'icons/weather/thunderstorm.png'
-picImgSrc[96] = 'icons/weather/thunderstorm.png'
-picImgSrc[97] = 'icons/weather/thunderstorm.png'
-picImgSrc[98] = 'icons/weather/thunderstorm.png'
-picImgSrc[99] = 'icons/weather/thunderstorm.png'
-
-let weatherCodeStr = []
-weatherCodeStr[0] = 'Clear sky'
-weatherCodeStr[1] = 'Mainly clear'
-weatherCodeStr[2] = 'Partly cloudy'
-weatherCodeStr[3] = 'Overcast'
-weatherCodeStr[45] = 'Fog'
-weatherCodeStr[48] = 'Depositing rime fog'
-weatherCodeStr[51] = 'Light drizzle'
-weatherCodeStr[53] = 'Moderate drizzle'
-weatherCodeStr[55] = 'Dense intensity drizzle'
-weatherCodeStr[56] = 'Light freezing drizzle'
-weatherCodeStr[57] = 'Dense intensity freezing drizzle'
-weatherCodeStr[61] = 'Slight rain'
-weatherCodeStr[63] = 'Moderate rain'
-weatherCodeStr[65] = 'Heavy intensity rain'
-weatherCodeStr[66] = 'Light freezing rain'
-weatherCodeStr[67] = 'Heavy intensity freezing rain'
-weatherCodeStr[71] = 'Slight snow fall'
-weatherCodeStr[73] = 'Moderate snow fall'
-weatherCodeStr[75] = 'Heavy intensity snow fall'
-weatherCodeStr[80] = 'Rain showers: slight'
-weatherCodeStr[81] = 'Rain showers: moderate'
-weatherCodeStr[82] = 'Rain showers: violent'
-weatherCodeStr[85] = 'Snow showers: slight'
-weatherCodeStr[86] = 'Snow showers: heavy'
-weatherCodeStr[95] = 'Thunderstorm: slight or moderate'
-weatherCodeStr[96] = 'Thunderstorm with slight hail'
-weatherCodeStr[99] = 'Thunderstorm with heavy hail'
-
 document.getElementById('search-input').addEventListener('keydown', function(event) {
     if (event.key == 'Enter') {searchWeatherFromSearchBox()}
 })
 
 function makeRequestURLToGoogleMaps(locationName) {
-    return 'https://maps.googleapis.com/maps/api/geocode/json?address=' 
-            + locationName + '&key=AIzaSyA9R30QTxtTkp6xwqr0FL7Q4I2c20VatZs'
+    weatherForecast.urlToGoogleMaps = 'https://maps.googleapis.com/maps/api/geocode/json?address=' 
+    + locationName + '&key=AIzaSyA9R30QTxtTkp6xwqr0FL7Q4I2c20VatZs'
 }
 
 function makewRequestURLToWeatherServer() {
-    return 'https://api.open-meteo.com/v1/forecast?latitude=' + latitude + '&longitude=' + longitude 
-        + '&hourly=temperature_2m,precipitation,rain,showers,weathercode&daily=' 
+    weatherForecast.urlToWeatherServer = 'https://api.open-meteo.com/v1/forecast?latitude=' 
+        + weatherForecast.latitude + '&longitude=' 
+        + weatherForecast.longitude + '&hourly=temperature_2m,precipitation,rain,showers,weathercode&daily=' 
         + 'weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum&timezone=auto'
 }
 
-function sendRequestToServer(method, url) {
-    const headers = {
-        'Content-Type': 'application/json'
-    }
+function sendRequestToServer(url) {
     return fetch(url).then(response => {
         if (response.ok) {
             return response.json()
@@ -114,13 +39,13 @@ function changePicByWeather(weatherCode, picId, imgWidth = 64) {
 }
 
 function getImgSrcByWeatherCode(code) {
-    if (picImgSrc[code] != '') {
-        return picImgSrc[code]
+    if (weatherForecast.picImgSrc[code] != '') {
+        return weatherForecast.picImgSrc[code]
     } else return 'icons/weather/sun.png'
 }
 
 function updateMap() {
-    const location = { lat: parseFloat(latitude), lng: parseFloat(longitude) }
+    const location = { lat: parseFloat(weatherForecast.latitude), lng: parseFloat(weatherForecast.longitude) }
     const map = new google.maps.Map(document.getElementById("map"), {
         zoom: 6,
         center: location,
@@ -186,17 +111,14 @@ function forecastFor7days(data) {
         const divDay = document.createElement('div')
         divDay.classList.add('weather-day')
         const divDay1Day = document.createElement('div')
-        divDay1Day.style.width = '60px'
+        divDay1Day.classList.add('divDay1')
         const divDay2Pic = document.createElement('div')
-        divDay2Pic.style.width = '40px'
+        divDay2Pic.classList.add('divDay2')
         const divDay3MinT = document.createElement('div')
-        divDay3MinT.width = '30px'
         const divDay4Bar = document.createElement('div')
         divDay4Bar.classList.add('progress')
-        divDay4Bar.style.width = '100px'
-        divDay4Bar.style.margin = '0 10px'
         const divDay5MaxT = document.createElement('div')
-        divDay5MaxT.style.width = '30px'
+        divDay5MaxT.classList.add('divDay5')
         
         if (i != 0) {
             divDay1Day.innerHTML = getDayOfWeek(new Date(data.daily.time[i]))
@@ -233,13 +155,16 @@ function forecastFor7days(data) {
 }
 
 function updateWeatherInfo() {
-    sendRequestToServer('GET', makewRequestURLToWeatherServer())
+    makewRequestURLToWeatherServer()
+    sendRequestToServer(weatherForecast.urlToWeatherServer)
     .then((data) => {
-        changeElementById('city-location', city)
-        changeElementById('temperature-now', Math.round(data.hourly.temperature_2m[0]))
-        changePicByWeather(data.hourly.weathercode[0], 'pic-weather-now', 64)
-        changeElementById('max-temperature', Math.round(data.daily.temperature_2m_max[0]))
-        changeElementById('min-temperature', Math.round(data.daily.temperature_2m_min[0]))
+        $('#city-location').text(weatherForecast.city)
+        $('#temperature-now').text(Math.round(data.hourly.temperature_2m[0]))
+        const picWeatherNow = $('#pic-weather-now')
+        picWeatherNow.attr('width', 64)
+        picWeatherNow.attr('src', getImgSrcByWeatherCode(data.hourly.weathercode[0]))
+        $('#max-temperature').text(Math.round(data.daily.temperature_2m_max[0]))
+        $('#min-temperature').text(Math.round(data.daily.temperature_2m_min[0]))
         updateMap()
         forecastFor24Hours(data)
         forecastFor7days(data)
@@ -250,12 +175,13 @@ function updateWeatherInfo() {
 function searchWeatherFromSearchBox() {
     const searchLocation = document.getElementById('search-input')
     if (searchLocation.value != '') {
-        sendRequestToServer('GET', makeRequestURLToGoogleMaps(searchLocation.value))
+        makeRequestURLToGoogleMaps(searchLocation.value)
+        sendRequestToServer(weatherForecast.urlToGoogleMaps)
             .then((data) => {
                 searchLocation.value = ''
-                latitude = data.results[0].geometry.location.lat
-                longitude = data.results[0].geometry.location.lng
-                city = data.results[0].address_components[0].short_name
+                weatherForecast.latitude = data.results[0].geometry.location.lat
+                weatherForecast.longitude = data.results[0].geometry.location.lng
+                weatherForecast.city = data.results[0].address_components[0].short_name
                 updateWeatherInfo()
             })  
             .catch((err) => {console.error(err)})    
