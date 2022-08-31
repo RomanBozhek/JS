@@ -27,11 +27,6 @@ function sendRequestToServer(url) {
     })
 }
 
-function changeElementById(id, newValue) {
-    const element = document.getElementById(id)
-    element.textContent = newValue
-}
-
 function changePicByWeather(weatherCode, picId, imgWidth = 64) {
     picture = document.getElementById(picId)
     picture.width = imgWidth
@@ -125,8 +120,8 @@ function forecastFor7days(data) {
         } else { divDay1Day.innerHTML = 'today'}
         divDay2Pic.innerHTML = '<img src=' + getImgSrcByWeatherCode(data.daily.weathercode[i]) + ' width=16>'
         divDay3MinT.innerHTML = Math.round(data.daily.temperature_2m_min[i]) + '<sup>o</sup>'
-        const maxT = Math.round(Math.max(...data.daily.temperature_2m_max))
-        const minT = Math.round(Math.min(...data.daily.temperature_2m_min))
+        const maxT = Math.round(_.max(data.daily.temperature_2m_max))
+        const minT = Math.round(_.min(data.daily.temperature_2m_min))
         const per1Deg = 100 / (maxT - minT)
         let leftDifference = Math.round(data.daily.temperature_2m_min[i] - minT)
         let rightDifference = Math.round(maxT - data.daily.temperature_2m_max[i])

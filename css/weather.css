@@ -1,5 +1,5 @@
 .container {
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto;
 }
 
@@ -12,7 +12,7 @@
     border: 1px solid darkgrey;
     padding: 0;
     padding-left: 5px;
-    width: 495px;
+    width: 595px;
     max-width: calc(100%-100px);
     border-radius: 5px;
     height: 20px;
@@ -35,13 +35,13 @@
 }
 
 #weather-now {
-    width: 150px;
+    width: 200px;
     height: 250px;
     box-sizing: border-box;
 }
 
 #map {
-    width: 450px;
+    width: 500px;
     height: 250px;
     box-sizing: border-box;
     border-radius: 10px;
@@ -118,4 +118,29 @@
     width: 100px;
     margin: 0 10px;
     vertical-align: middle;
+  }
+
+  @media (max-width: 650px) {
+    .container {
+        min-width: 350px;
+    }
+    #weather-map {
+        display: block;
+    }
+    #map {
+        width: 100%;
+    }
+    #weather-now {
+        display: flex;
+        width: 100%;
+        height: 100px;
+        align-items: center;
+    }
+    #weather-now div {
+        padding: 0 10px;
+    }
+    #weather-now h4,
+    #weather-now h2 {
+        font-size: 24px;
+    }
   }

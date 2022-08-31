@@ -1,3 +1,5 @@
+const _ = requirejs('underscore')
+
 let weatherForecast = {
     latitude: '0',
     longitude: '0',
