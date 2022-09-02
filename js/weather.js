@@ -183,4 +183,5 @@ function searchWeatherFromSearchBox() {
     }
 }
 
+console.log('here we GO!!!')
 searchWeatherFromSearchBox()
