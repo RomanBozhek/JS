@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knockout JS</title>
+</head>
+<body>
+    <div data-bind="text: greeting"></div><br>
+    <button data-bind="click: clickHandler">click me!</button autofocus><br><br>
+    <input type="text" data-bind="textInput: firstName, visible: isVisible">
+    <input type="text" data-bind="textInput: lastName, visible: isVisible">
+    <p data-bind="text: fullName(), visible: isVisible"></p>
+
+    <script src="lib/knockout.js"></script>
+    <script>
+        const viewModel = {
+            greeting: ko.observable('Hello world!'),
+            firstName: ko.observable(''),
+            lastName: ko.observable(''),
+            isVisible: ko.observable(true), 
+            clickHandler: function(viewModel) {
+                if (!this.isVisible()) this.isVisible(true)
+                else this.isVisible(false)
+            }
+        }
+
+        viewModel.fullName = ko.computed(function() {
+                return this.firstName() + ' ' + this.lastName()
+            }, viewModel)
+
+        ko.applyBindings(viewModel)
+
+        viewModel.greeting.subscribe(function(newValue) {
+            console.log(newValue)
+        })
+
+        viewModel.greeting('Fuck russia!')
+
+        setTimeout(function() {
+            viewModel.isVisible(false)
+        }, 1000)
+    </script>
+</body>
+</html>

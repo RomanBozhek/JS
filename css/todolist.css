@@ -1,0 +1,43 @@
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.application-name h2 {
+    margin-bottom: 10px;
+}
+
+.input {
+    border-radius: 5px;
+    border: 1px solid lightgrey;
+    height: 30px;
+    box-sizing: border-box;
+}
+
+.btn {
+    background-color: rgb(55, 161, 237);
+    color: aliceblue;
+    border-radius: 5px;
+    border: 1px solid lightgrey;
+    height: 30px;
+    box-sizing: border-box;
+}
+
+.columns {
+    display: flex;
+}
+
+.column {
+    width: 50%;
+    box-sizing: border-box;
+    margin: none;
+}
+
+.no-tasks {
+    color: grey;
+}
+
+a {
+    text-decoration: none;
+    color: darkblue;
+}

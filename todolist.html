@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/todolist.css">
+    <title>ToDoList</title>
+</head>
+<body>
+    <div class="container">
+        <div id="todolist">
+            <div class="application-name">
+                <h2>TODO Application</h2>
+                <input id="input-task" type="text" class="input" placeholder="what to do?" autofocus 
+                    data-bind="textInput: newTaskTitle, event: {'keyup': onEnter}">
+                <button class="btn" data-bind="click: addTask">Add task</button>
+            </div>
+            <div class="columns">
+                <div class="column">
+                    <h3>Tasks:</h3>
+                    <div data-bind="visible: tasks().length">
+                        <ul data-bind="foreach: tasks">
+                            <label data-bind="click: $parent.checkTask">
+                                <li class="task-checkbox">
+                                    <input type="checkbox">
+                                    <span data-bind="text: title"></span>
+                                    <a class="a-task remove-task" href="#" data-bind="click: $parent.removeTask">(remove)</a>
+                                </li>
+                            </label>
+                        </ul>
+                    </div>
+                    <div class="no-tasks" data-bind="visible: !tasks().length">
+                        <h4>No tasks</h4>
+                    </div>
+                </div>
+                <div class="column">
+                    <h3>Completed:</h3>
+                    <div data-bind="visible: completedTasks().length">
+                        <ul data-bind="foreach: completedTasks">
+                            <li class="task">
+                                <span data-bind="text: title"></span>
+                                <a href="#" class="a-task undo-task" data-bind="click: $parent.undoTask">(undo)</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="no-tasks" data-bind="visible: !completedTasks().length">
+                        <h4>No tasks</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="lib/knockout.js"></script>
+    <script src="js/todolist/todolist.js"></script>
+</body>
+</html>
